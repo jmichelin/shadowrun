@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="../css/style.css">
+  <meta charset="utf-8">
+  <title>Shadowrun Attack Helper v .5</title>
+
+  <!--
+  1. Choose the weapon and ammo you want to use, and note their DV and AP.
+  2. Choose a fire mode that you want to use. (single-shot, semi-auto, burst-fire, full-auto)
+  3. Add your Agility to your pool
+  4. Add the correct weapon skill to your pool: Archery, Automatics, Exotic Ranged, Heavy, Longarms, Pistols, or Throwing.
+  5. Add the bonus for a laser sight or smartlink to your pool.
+  6. Subtract any Wound Modifier from your pool.
+  7. Subtract the Recoil Compensation from the number of rounds fired this Phase, then subtract one; the difference isthe recoil modifier.
+  8. If the weapon is a heavy weapon, double the recoil modifier.
+  9. If the weapon is a shotgun and the fire mode is BF or FA, double the recoil modifier.
+  10. If the recoil modifier is greater than zero, subtract it from your pool.
+  11. Roll your pool dice, note your hits.
+  12. If your fire mode is one of the wide bursts, tell the gamemaster; the defender loses defense pool.
+  13. The defender rolls defense pool and subtracts their hits from your hits. If your net hits are zero or less, stop now.
+  14. Add your net hits to your weapon + ammo DV; this is your modified DV. If this number is greater than the defender's armor modified by your weapon AP), it causes Physical damage, otherwise it causes Stun damage.
+  15. If your fire mode is one of the narrow bursts, add one less than the number of rounds in the burst to your modified DV.
+  16. Tell the gamemaster your final modified DV. The defender will attempt to resist the horrible damage you have just caused.
+-->
+
+<!--
+Take values in form and calulate final damage value as they change.
+initialDamageValue = Weapon DV + Ammo DV
+initialArmorPiercingValue = Weapon AP + Ammo AP
+initialToHitValue = Agility + laser/Link + weaponSkill
+runningToHitValue = initialToHitValue - woundModifier
+recoilModifier = (recoilCompensation - getNumberRoundsFromFireMode()) - 1
+recoilModifier = recoilModifier + getRecoilModifierWeaponAdjustment()
+if (recoilModifier > 0) {
+runningToHitValue = runningToHitValue - recoilModifier;
+}
+numberOfSuccessesToHit = (roll function would be take runningToHitValue as # of iterations over Math.floor((Math.random() * 6) + 1) any values of 5 or 6 count as a hit)
+finalToHitValue = runningToHitValue + numberOfSuccessesToHit
+record defenders hits (TODO: create defender calc app like this one)
+if defendersHits > finalToHitValue stop, attacker missed
+else calculatedDamage = finalToHitValue + weaponDV + ammoDV
+stunCheck(calculatedDamage) {
+if (calculatedDamage > (defenderArmorRating - initialArmorPiercingValue)) {
+damageType = "physical";
+}
+else {
+damageType = "stun";
+}
+}
+if (fireModeWidth === "narrow"){
+calculatedDamage += getNumberRoundsFromFireMode() - 1;
+}
+finalModifiedDamageValue = "calculatedDamage";
+
+
+-->
+</head>
+<body>
+  <div class="container">
+    <div class="well">
+      <form action="shadowrun.html" method="post">
+        <div class="form-group">
+          <div class="input-group">
+            <label for="weaponDamageValue" class="input-group-addon">Weapon Damage Value</label>
+            <input type="text" name="weaponDamageValue" class="form-control" id="weaponDamageValue" placeholder="Weapon Damage Value" onChange="calcDamageValue()">
+            <label for="ammoDamageValue" class="input-group-addon">Ammo Damage Value</label>
+            <input type="text" name="ammoDamageValue" class="form-control" id="ammoDamageValue" placeholder="Ammo Damage Value" onChange="calcDamageValue()">
+          </div>
+          <div class="input-group">
+            <label for="weaponAPValue" class="input-group-addon">Weapon AP Value</label>
+            <input type="text" name="weaponAPValue" class="form-control" id="weaponAPValue" placeholder="Weapon AP Value" onChange="calcModifiedDefendersArmor()">
+            <label for="ammoAPValue" class="input-group-addon">Ammo AP Value</label>
+            <input type="text" name="ammoAPValue" class="form-control" id="ammoAPValue" placeholder="Ammo AP Value" onChange="calcModifiedDefendersArmor()">
+          </div>
+          <div class="input-group">
+            <label for="fireMode" class="input-group-addon">Select Firemode</label>
+            <select name="fireMode" class="form-control" id="fireMode" onChange="setNumberOfRounds()">
+              <option value="">-=Select Fire Mode=-</option>
+              <option value="singlShot">single shot</option>
+              <option value="semiAuto">semi auto</option>
+              <option value="burstFire">Burst Fire</option>
+              <option value="fullAutoLong">full auto (long)</option>
+              <option value="fullAutoFull">full auto (full)</option>
+            </select>
+            <label for="numOfRounds" class="input-group-addon">Number of Rounds</label>
+            <input type="text" name="numOfRounds" class="form-control" id="numOfRounds" placeholder="Number of Rounds">
+            <label for="fireModeWidth" class="input-group-addon">Select Firemode Width</label>
+            <select name="fireModeWidth" class="form-control" id="fireModeWidth" onChange="toggleFireMode()">
+              <option value="">-=Select Fire Mode Width=-</option>
+              <option value="narrow">narrow</option>
+              <option value="wide">wide</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="agility" class="input-group-addon">Agility</label>
+            <input type="text" name="agility" class="form-control" id="agility" placeholder="agility" onChange="calcAttackerDicePool()">
+            <label for="weaponSkill" class="input-group-addon">Weapon Skill</label>
+            <input type="text" name="weaponSkill" class="form-control" id="weaponSkill" placeholder="Weapon Skill" onChange="calcAttackerDicePool()">
+            <label for="smartLinkBonus" class="input-group-addon">Laser/Smartlink Bonus</label>
+            <input type="text" name="smartLinkBonus" class="form-control" id="smartLinkBonus" placeholder="Laser/Smartlink Bonus" onChange="calcAttackerDicePool()">
+            <label for="smartLinkBonus" class="input-group-addon">Wound Modifier</label>
+            <input type="text" name="woundModifier" class="form-control" id="woundModifier" placeholder="Wound Modifier" onChange="calcAttackerDicePool()">
+            <label for="additionalBonus" class="input-group-addon">Additional Bonus</label>
+            <input type="text" name="additionalBonus" class="form-control" id="additionalBonus" placeholder="Additional Bonus" onChange="calcAttackerDicePool()">
+          </div>
+          <div class="input-group">
+            <label for="recoilCompensation" class="input-group-addon">Recoil Compensation</label>
+            <input type="text" name="recoilCompensation" class="form-control" id="recoilCompensation" placeholder="Recoil Compensation" onchange="calcRecoilModifier()">
+            <label for="weaponTypeModifier" class="input-group-addon">Select Firemode</label>
+            <select name="weaponTypeModifier" class="form-control" id="weaponTypeModifier" onChange="calcRecoilModifier()">
+              <option value="">-=Shotgun or Heavy=-</option>
+              <option value="">none</option>
+              <option value="shotgun">Shotgun</option>
+              <option value="heavy">Heavy</option>
+            </select>
+            <label for="recoilModifier" class="input-group-addon">Recoil Modifier</label>
+            <input type="text" name="recoilModifier" class="form-control" id="recoilModifier" placeholder="Recoil Modifier" onchange="calcAttackerDicePool()">
+          </div>
+          <div class="input-group">
+            <label for="defenderDicePoolModifier" class="input-group-addon red-label">Defenders Dice Pool Modifier<span id="defenderDicePoolModifier" class="badge badge-important">Fill In Form</span></label>
+            <label for="attackerDicePool" class="input-group-addon green-label">Attackers Dice Pool <span id="attackerDicePoolBadge" class="badge badge-success" ondblclick="calcAttackerDicePool()">Fill In Form </span><span class="glyphicon glyphicon-refresh" onclick="rollAttackerDice()"></span>&nbsp;<br><div id="attackerDiceRoll"></div></label>
+          </div>
+          <div class="input-group">
+            <label for="defendersHits" class="input-group-addon red-label">Defenders Hits</label>
+            <input type="text" name="defendersHits" class="form-control" id="defendersHits" placeholder="Defenders Hits">
+            <label for="attackersHits" class="input-group-addon green-label">Attackers Hits</label>
+            <input type="text" name="attackersHits" class="form-control" id="attackersHits" placeholder="Attackers Hits">
+          </div>
+          <div class="input-group">
+            <label for="defendersArmor" class="input-group-addon">Defenders Armor</label>
+            <input type="text" name="defendersArmor" class="form-control" id="defendersArmor" placeholder="Defenders Armor">
+            <label for="modifiedDV" class="input-group-addon">Modified DV</label>
+            <input type="text" name="modifiedDV" class="form-control" id="modifiedDV" placeholder="Modified DV">
+          </div>
+          <div class="input-group">
+            <label for="modifiedDefendersArmor" class="input-group-addon">Modified Defenders Armor</label>
+            <input type="text" name="modifiedDefendersArmor" class="form-control" id="modifiedDefendersArmor" placeholder="Modified Defenders Armor (Armor - AP)">
+            <label for="finalDV" class="input-group-addon"><span class="label label-warning input-group-addon" id="stun">Stun</span><span class="label label-danger input-group-addon" id="physical">Physical</span> Final DV</label>
+            <input type="text" name="finalDV" class="form-control" id="finalDV" placeholder="Final DV (modified DV + (Num of Rounds - 1)">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+          <input type="hidden" name="attackerDicePoolHidden" id="attackerDicePoolHidden">
+          <input type="hidden" name="defenderDicePoolHidden" id="defenderDicePoolHidden">
+          <input type="hidden" name="fireModeWidthFlag" id="fireModeWidthFlag" value="notset">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="well">
+      <pre>
+
+        Take values in form and calulate final damage value as they change.
+        initialDamageValue = Weapon DV + Ammo DV
+        initialArmorPiercingValue = Weapon AP + Ammo AP
+        initialToHitValue = Agility + laser/Link + weaponSkill
+        runningToHitValue = initialToHitValue - woundModifier
+        recoilModifier = (recoilCompensation - getNumberRoundsFromFireMode()) - 1
+        recoilModifier = recoilModifier + getRecoilModifierWeaponAdjustment()
+        if (recoilModifier > 0) {
+          runningToHitValue = runningToHitValue - recoilModifier;
+        }
+        numberOfSuccessesToHit = (rolldice(numOfDice) { //runningToHitValue
+          var numOfHits = 0;
+          for (i=1; i <= numOfDice; i++) {
+            if (Math.floor((Math.random() * 6) + 1) >= 5) {
+              numOfHits++;
+            }
+          }
+        }
+        finalToHitValue = runningToHitValue + numberOfSuccessesToHit
+        record defenders hits (TODO: create defender calc app like this one)
+        if defendersHits > finalToHitValue stop, attacker missed
+        else calculatedDamage = finalToHitValue + weaponDV + ammoDV
+        stunCheck(calculatedDamage) {
+          if (calculatedDamage > (defenderArmorRating - initialArmorPiercingValue)) {
+            damageType = "physical";
+          }
+          else {
+            damageType = "stun";
+          }
+        }
+        if (fireModeWidth === "narrow"){
+          calculatedDamage += getNumberRoundsFromFireMode() - 1;
+        }
+        wide fireModeWidth means -2 to defenders dice pool
+        finalModifiedDamageValue = "calculatedDamage";</pre>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="../js/shadowrun.js"></script>
+    <script>
+    </script>
+  </body>
+  </html>
