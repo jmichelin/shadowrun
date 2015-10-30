@@ -284,3 +284,9 @@ function calcDefenderDamageTaken () {
   }
   document.getElementById("defenderDamageTaken").value = damageCalc ;
 }
+//////////////
+//Tool Tips!
+//////////////
+$("#defenderSoakDP").tooltip({
+	content: "Body + Armor - Attacker AP"
+	});
