@@ -6,7 +6,7 @@ function calcAttackerDicePool() {
   //alert(document.querySelector('#attackerDicePoolBadge').textContent);
   //agility + weapon skill + smartLinkBonus + - woundModifier - if (recoilModifier > 0)
   //document.querySelector('#number3MadLibReplace').textContent = document.getElementById("number3").value;
-  var attackerDicePool;
+  var attackerDicePool = 0;
   var agility = parseInt(document.getElementById("agility").value);
   if (agility) {
     attackerDicePool = agility;
@@ -22,6 +22,7 @@ function calcAttackerDicePool() {
 
   var smartLinkBonus = parseInt(document.getElementById("smartLinkBonus").value);
   if (smartLinkBonus) {
+      //alert("smartLinkBonus" + smartLinkBonus);
     attackerDicePool = attackerDicePool + smartLinkBonus;
   }
   var woundModifier = parseInt(document.getElementById("woundModifier").value);
@@ -58,29 +59,45 @@ function calcDamageValue() {
   if (attackersHits) {
     attackerDamageValue = attackerDamageValue + attackersHits;
   }
-
+  var defendersHits = parseInt(document.getElementById("defendersHits").value);
+  if (defendersHits) {
+    attackerDamageValue = attackerDamageValue - defendersHits;
+  }
   //document.querySelector('#modifiedDV').textContent = attackerDamageValue;
   document.getElementById("modifiedDV").value = attackerDamageValue;
+  calcFinalDamageValue();
 }
-
+////////////////////////
+//Calculate Modified Defenders Armor
+////////////////////////
 function calcModifiedDefendersArmor() {
   var modifiedDefendersArmor = 0;
   //alert("type of: " + typeof(document.getElementById("weaponAPValue").value) + " value: " +document.getElementById("weaponAPValue").value);
   //alert("type of: " + typeof(parseInt(document.getElementById("weaponAPValue").value)) + " value: " +document.getElementById("weaponAPValue").value);
-
-  if(document.getElementById("weaponAPValue").value) {
-    weaponAPModifier = parseInt(document.getElementById("weaponAPValue").value);
+  var weaponAPValue = parseInt(document.getElementById("weaponAPValue").value);
+  var weaponAPModifier = 0;
+  if(weaponAPValue > 0) {
+    weaponAPModifier = weaponAPValue;
     //alert("type of: " + typeof(weaponAPModifier) + " value: " + weaponAPModifier);
     //alert("type of: " + typeof(parseInt(modifiedDefendersArmor)) + " value: " +modifiedDefendersArmor);
   }
+  ammoAPValue = parseInt(document.getElementById("ammoAPValue").value);
   ammoAPModifier = 0;
-  if (document.getElementById("ammoAPValue").value) {
+  if (ammoAPValue > 0) {
     //alert("ammo ap "+ document.getElementById("ammoAPValue").value);
     ammoAPModifier = parseInt(document.getElementById("ammoAPValue").value);
     //alert("ammoAPModifier " + typeof(ammoAPModifier) + "value: " + ammoAPModifier)
   }
-  document.getElementById("modifiedDefendersArmor").value = (weaponAPModifier + ammoAPModifier) * -1 ;
-
+  defendersArmor = parseInt(document.getElementById("defendersArmor").value);
+  if (defendersArmor > 0) {
+    //alert("ammo ap "+ document.getElementById("defendersArmor").value);
+    defendersArmor = parseInt(document.getElementById("defendersArmor").value);
+    //alert("ammoAPModifier " + typeof(ammoAPModifier) + "value: " + ammoAPModifier)
+  } else {
+    defendersArmor = 0;
+  }
+  document.getElementById("modifiedDefendersArmor").value = defendersArmor - (weaponAPModifier + ammoAPModifier);
+  calcDefenderDamageTaken();
 }
 
 function setNumberOfRounds() {
@@ -202,11 +219,20 @@ function rollDice(num1, owner) {
   resultsLog = "";
   for (i=0; i < num1; i++) {
     diceResult = getRandomIntInclusive(1,6);
-    if (diceResult >= 5) {
+    if (diceResult === 6) {
       numOfHits++;
-      resultsLog += "<span class=\"hitSuccess\">" + diceResult + "</span>&nbsp;";
-    } else {
-      resultsLog += "<span class=\"hitFail\">" + diceResult + "</span>&nbsp;";
+      resultsLog += "<span class=\"hitSuccess icon-diesix\">" + diceResult + "</span>&nbsp;";
+    } else if (diceResult === 5) {
+      numOfHits++;
+      resultsLog += "<span class=\"hitSuccess icon-diefive\">" + diceResult + "</span>&nbsp;";
+    } else if (diceResult === 4)  {
+      resultsLog += "<span class=\"hitFail icon-diefour\">" + diceResult + "</span>&nbsp;";
+    } else if (diceResult === 3)  {
+      resultsLog += "<span class=\"hitFail icon-diethree\">" + diceResult + "</span>&nbsp;";
+    } else if (diceResult === 2)  {
+      resultsLog += "<span class=\"hitFail icon-dietwo\">" + diceResult + "</span>&nbsp;";
+    } else if (diceResult === 1)  {
+      resultsLog += "<span class=\"hitFail icon-dieone\">" + diceResult + "</span>&nbsp;";
     }
   }
   if (owner === "attacker") {
@@ -236,4 +262,25 @@ function rollDefendersDice() {
   numOfDice = parseInt(document.getElementById("defenderDicePoolHidden").value);
   rollDice(numOfDice, "defender");
   calcDamageValue();
+}
+/////////////////////////
+//calc final damage value
+//////////////////////////
+function calcFinalDamageValue () {
+  modifiedDV = parseInt(document.getElementById("modifiedDV").value);
+  numOfRounds = parseInt(document.getElementById("numOfRounds").value);
+  document.getElementById("finalDV").value = modifiedDV + (numOfRounds - 1);
+  calcDefenderDamageTaken();
+}
+/////////////////////////////
+//calc defender damage taken
+/////////////////////////////
+function calcDefenderDamageTaken () {
+  finalDV = parseInt(document.getElementById("finalDV").value);
+  modifiedDefendersArmor = parseInt(document.getElementById("modifiedDefendersArmor").value);
+  var damageCalc = (modifiedDefendersArmor - finalDV) * -1;
+  if(damageCalc <= 0){
+      damageCalc = 0;
+  }
+  document.getElementById("defenderDamageTaken").value = damageCalc ;
 }
