@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en"><!-- InstanceBegin template="/Templates/shadowrun.dwt" codeOutsideHTMLIsLocked="false" -->
 <head>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="http://www.webhostinghub.com/glyphs/css/whhg.css">
-    <meta charset="utf-8">
-    <title>Shadowrun Attack Helper v .5</title>
-    <!--
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="http://www.webhostinghub.com/glyphs/css/whhg.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+<!-- InstanceBeginEditable name="doctitle" -->
+<title></title>
+<!-- InstanceEndEditable -->
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<!-- InstanceBeginEditable name="head" -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="http://www.webhostinghub.com/glyphs/css/whhg.css">
+
+
+<!--
     1. Choose the weapon and ammo you want to use, and note their DV and AP.
     2. Choose a fire mode that you want to use. (single-shot, semi-auto, burst-fire, full-auto)
     3. Add your Agility to your pool
@@ -54,131 +73,156 @@ calculatedDamage += getNumberRoundsFromFireMode() - 1;
 }
 finalModifiedDamageValue = "calculatedDamage";
 -->
+<!-- InstanceEndEditable -->
 </head>
-<body>
-    <div class="container">
 
-        <div class="col-md-5"> test</div>
-        <div class="col-md-2">test</div>
-        <div class="col-md-5">
-            <form action="shadowrun.html" method="post">
-                <div class="form-group">
-                    <div class="input-group">
-                        <label for="weaponDamageValue" class="input-group-addon">Weapon Damage Value</label>
-                        <input type="text" name="weaponDamageValue" class="form-control" id="weaponDamageValue" placeholder="Weapon Damage Value" onChange="calcDamageValue()">
-                    </div>
-                    <div class="input-group">
-                        <label for="ammoDamageValue" class="input-group-addon">Ammo Damage Value</label>
-                        <input type="text" name="ammoDamageValue" class="form-control" id="ammoDamageValue" placeholder="Ammo Damage Value" onChange="calcDamageValue()">
-                    </div>
-                    <div class="input-group">
-                        <label for="weaponAPValue" class="input-group-addon">Weapon AP Value</label>
-                        <input type="text" name="weaponAPValue" class="form-control" id="weaponAPValue" placeholder="Weapon AP Value" onChange="calcModifiedDefendersArmor()">
-                    </div>
-                    <div class="input-group">
-                        <label for="ammoAPValue" class="input-group-addon">Ammo AP Value</label>
-                        <input type="text" name="ammoAPValue" class="form-control" id="ammoAPValue" placeholder="Ammo AP Value" onChange="calcModifiedDefendersArmor()">
-                    </div>
-                    <div class="input-group">
-                        <label for="fireMode" class="input-group-addon">Select Firemode</label>
-                        <select name="fireMode" class="form-control" id="fireMode" onChange="setNumberOfRounds()">
-                            <option value="">-=Select Fire Mode=-</option>
-                            <option value="singlShot">single shot</option>
-                            <option value="semiAuto">semi auto</option>
-                            <option value="burstFire">Burst Fire</option>
-                            <option value="fullAutoLong">full auto (long)</option>
-                            <option value="fullAutoFull">full auto (full)</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="numOfRounds" class="input-group-addon">Number of Rounds</label>
-                        <input type="text" name="numOfRounds" class="form-control" id="numOfRounds" placeholder="Number of Rounds">
-                    </div>
-                    <div class="input-group">
-                        <label for="fireModeWidth" class="input-group-addon">Select Firemode Width</label>
-                        <select name="fireModeWidth" class="form-control" id="fireModeWidth" onChange="toggleFireMode()">
-                            <option value="">-=Select Fire Mode Width=-</option>
-                            <option value="narrow">narrow</option>
-                            <option value="wide">wide</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="smartLinkBonus" class="input-group-addon">Laser/Smartlink Bonus</label>
-                        <input type="text" name="smartLinkBonus" class="form-control" id="smartLinkBonus" placeholder="Laser/Smartlink Bonus" onChange="calcAttackerDicePool()">
-                    </div>
-                    <div class="input-group">
-                        <label for="agility" class="input-group-addon">Agility</label>
-                        <input type="text" name="agility" class="form-control" id="agility" placeholder="agility" onChange="calcAttackerDicePool()">
-                        <label for="weaponSkill" class="input-group-addon">Weapon Skill</label>
-                        <input type="text" name="weaponSkill" class="form-control" id="weaponSkill" placeholder="Weapon Skill" onChange="calcAttackerDicePool()">
-                    </div>
-                    <div class="input-group">
-                        <label for="woundModifier" class="input-group-addon">Wound Modifier</label>
-                        <input type="text" name="woundModifier" class="form-control" id="woundModifier" placeholder="Wound Modifier" onChange="calcAttackerDicePool()">
-                    </div>
-                    <div class="input-group">
-                        <label for="additionalBonus" class="input-group-addon">Additional Bonus</label>
-                        <input type="text" name="additionalBonus" class="form-control" id="additionalBonus" placeholder="Additional Bonus" onChange="calcAttackerDicePool()">
-                    </div>
-                    <div class="input-group">
-                        <label for="recoilCompensation" class="input-group-addon">Recoil Compensation</label>
-                        <input type="text" name="recoilCompensation" class="form-control" id="recoilCompensation" placeholder="Recoil Compensation" onchange="calcRecoilModifier()">
-                    </div>
-                    <div class="input-group">
-                        <label for="weaponTypeModifier" class="input-group-addon">Select Firemode</label>
-                        <select name="weaponTypeModifier" class="form-control" id="weaponTypeModifier" onChange="calcRecoilModifier()">
-                            <option value="">-=Shotgun or Heavy=-</option>
-                            <option value="">none</option>
-                            <option value="shotgun">Shotgun</option>
-                            <option value="heavy">Heavy</option>
-                        </select>
-                        <label for="recoilModifier" class="input-group-addon">Recoil Modifier</label>
-                        <input type="text" name="recoilModifier" class="form-control" id="recoilModifier" placeholder="Recoil Modifier" onchange="calcAttackerDicePool()">
-                    </div>
-                    <div class="input-group">
-                        <label for="attackerDicePool" class="input-group-addon green-label">Attackers Dice Pool <span id="attackerDicePoolBadge" class="badge badge-success" ondblclick="calcAttackerDicePool()">Fill In Form </span><span class="glyphicon glyphicon-refresh" onclick="rollAttackerDice()"></span><span class="icon-die-dice"></span>&nbsp;<br><div id="attackerDiceRoll"></div></label>
-                    </div>
-                    <div class="input-group">
-                        <label for="modifiedDV" class="input-group-addon green-label">Modified DV</label>
-                        <input type="text" name="modifiedDV" class="form-control" id="modifiedDV" placeholder="Modified DV">
-                    </div>
-                    <div class="input-group">
-                        <label for="attackersHits" class="input-group-addon green-label">Attackers Hits</label>
-                        <input type="text" name="attackersHits" class="form-control" id="attackersHits" placeholder="Attackers Hits" onchange="calcDamageValue()">
-                    </div>
-                    <div class="input-group">
-                        <label for="finalDV" class="input-group-addon"><span class="label label-warning input-group-addon" id="stun">Stun</span><span class="label label-danger input-group-addon" id="physical">Physical</span> Final DV</label>
-                        <input type="text" name="finalDV" class="form-control" id="finalDV" placeholder="Final DV (modified DV + (Num of Rounds - 1)">
-                    </div>
-                    <div class="input-group">
-                        <label for="defenderDicePoolModifier" class="input-group-addon red-label">Defenders Dice Pool Modifier<span id="defenderDicePoolModifier" class="badge badge-important">Fill In Form</span></label>
-                    </div>
-                    <div class="input-group">
-                        <label for="defendersHits" class="input-group-addon red-label">Defenders Hits</label>
-                        <input type="text" name="defendersHits" class="form-control" id="defendersHits" placeholder="Defenders Hits" onchange="calcDamageValue()">
-                    </div>
-                    <div class="input-group">
-                        <label for="defendersArmor" class="input-group-addon">Defenders Armor</label>
-                        <input type="text" name="defendersArmor" class="form-control" id="defendersArmor" placeholder="Defenders Armor" onchange="calcModifiedDefendersArmor()">
-                    </div>
-                    <div class="input-group">
-                        <label for="modifiedDefendersArmor" class="input-group-addon">Modified Defenders Armor</label>
-                        <input type="text" name="modifiedDefendersArmor" class="form-control" id="modifiedDefendersArmor" placeholder="Modified Defenders Armor (Armor - AP)">
-                    </div>
-                    <div class="input-group">
-                        <label for="defenderDamageTaken" class="input-group-addon">Defender Damage Taken</label>
-                        <input type="text" name="defenderDamageTaken" class="form-control" id="defenderDamageTaken" placeholder="Defender Damage Taken">
-                    </div>
-                    <!--<button type="submit" class="btn btn-default">Submit</button>-->
-                    <input type="hidden" name="attackerDicePoolHidden" id="attackerDicePoolHidden">
-                    <input type="hidden" name="defenderDicePoolHidden" id="defenderDicePoolHidden">
-                    <input type="hidden" name="fireModeWidthFlag" id="fireModeWidthFlag" value="notset">
-                </form>
-            </div>
-        </div>
+<body>
+<div class="container-fluid">
+<nav class="navbar navbar-inverse">
         <div class="container">
-            <div class="well">
-                <pre>
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Shadow Run</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="dashboard.html">TODO:Home</a></li>
+              <li><a href="#">TODO: Campaign Manager => Character Manager</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="attack-helper.html">Attack Helper</a></li>
+<!--                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+-->                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+<!-- InstanceBeginEditable name="mainContainer" -->
+<div class="container">
+  <div class="col-lg-5"> Defender Data</div>
+  <div class="col-lg-2">Results Data</div>
+  <div class="col-lg-5">
+    <form action="shadowrun.html" method="post">
+      <div class="form-group">
+      <div class="input-group">
+        <label for="weaponDamageValue" class="input-group-addon">Wpn Dmg</label>
+        <input type="text" name="weaponDamageValue" class="form-control" id="weaponDamageValue" placeholder="Weapon Damage Value" onChange="calcDamageValue()">
+        <label for="weaponAPValue" class="input-group-addon">Wpn AP</label>
+        <input type="text" name="weaponAPValue" class="form-control" id="weaponAPValue" placeholder="Weapon AP Value" onChange="calcModifiedDefendersArmor()">
+      </div>
+      <div class="input-group">
+        <label for="ammoDamageValue" class="input-group-addon">Ammo Dmg</label>
+        <input type="text" name="ammoDamageValue" class="form-control" id="ammoDamageValue" placeholder="Ammo Damage Value" onChange="calcDamageValue()">
+        <label for="ammoAPValue" class="input-group-addon">Ammo AP</label>
+        <input type="text" name="ammoAPValue" class="form-control" id="ammoAPValue" placeholder="Ammo AP Value" onChange="calcModifiedDefendersArmor()">
+      </div>
+      <div class="input-group">
+        <label for="fireMode" class="input-group-addon">Firemode</label>
+        <select name="fireMode" class="form-control" id="fireMode" onChange="setNumberOfRounds()">
+          <option value="">-=Select Fire Mode=-</option>
+          <option value="singlShot">single shot</option>
+          <option value="semiAuto">semi auto</option>
+          <option value="burstFire">Burst Fire</option>
+          <option value="fullAutoLong">full auto (long)</option>
+          <option value="fullAutoFull">full auto (full)</option>
+        </select>
+        <label for="fireModeWidth" class="input-group-addon">Firemode Width</label>
+        <select name="fireModeWidth" class="form-control" id="fireModeWidth" onChange="toggleFireMode()">
+          <option value="">-=Select Width=-</option>
+          <option value="narrow">narrow</option>
+          <option value="wide">wide</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="weaponTypeModifier" class="input-group-addon">Shotgun/Heavy</label>
+        <select name="weaponTypeModifier" class="form-control" id="weaponTypeModifier" onChange="calcRecoilModifier()">
+          <option value="">-=Shotgun or Heavy=-</option>
+          <option value="">none</option>
+          <option value="shotgun">Shotgun</option>
+          <option value="heavy">Heavy</option>
+        </select>
+        <label for="numOfRounds" class="input-group-addon"># of Rnds</label>
+        <input type="text" name="numOfRounds" class="form-control" id="numOfRounds" placeholder="Number of Rounds" readonly>
+      </div>
+      <div class="input-group">
+        <label for="agility" class="input-group-addon">Agility</label>
+        <input type="text" name="agility" class="form-control" id="agility" placeholder="agility" onChange="calcAttackerDicePool()">
+        <label for="weaponSkill" class="input-group-addon">Wpn Skill</label>
+        <input type="text" name="weaponSkill" class="form-control" id="weaponSkill" placeholder="Weapon Skill" onChange="calcAttackerDicePool()">
+        <label for="smartLinkBonus" class="input-group-addon">Laser/Link</label>
+        <input type="text" name="smartLinkBonus" class="form-control" id="smartLinkBonus" placeholder="Laser/Smartlink Bonus" onChange="calcAttackerDicePool()">
+      </div>
+      <div class="input-group">
+        <label for="woundModifier" class="input-group-addon">Wnd Mod</label>
+        <input type="text" name="woundModifier" class="form-control" id="woundModifier" placeholder="Wound Modifier" onChange="calcAttackerDicePool()">
+        <label for="additionalBonus" class="input-group-addon">Misc Bonus</label>
+        <input type="text" name="additionalBonus" class="form-control" id="additionalBonus" placeholder="Additional Bonus" onChange="calcAttackerDicePool()">
+      </div>
+      <div class="input-group">
+        <label for="recoilCompensation" class="input-group-addon">Recoil Comp</label>
+        <input type="text" name="recoilCompensation" class="form-control" id="recoilCompensation" placeholder="Recoil Compensation" onchange="calcRecoilModifier()">
+        <label for="recoilModifier" class="input-group-addon">Recoil Modifier</label>
+        <input type="text" name="recoilModifier" class="form-control" id="recoilModifier" placeholder="Recoil Modifier" onchange="calcAttackerDicePool()">
+      </div>
+      <div class="input-group">
+        <label for="attackerDicePool" class="input-group-addon green-label">
+        Attackers Dice<span id="attackerDicePoolBadge" class="badge badge-success" ondblclick="calcAttackerDicePool()">Fill In Form </span><span class="glyphicon glyphicon-refresh" onclick="rollAttackerDice()"></span><span class="icon-die-dice"></span>&nbsp;<br>
+        <div id="attackerDiceRoll"></div>
+        </label>
+      </div>
+      <div class="input-group">
+        <label for="modifiedDV" class="input-group-addon green-label">Modified DV</label>
+        <input type="text" name="modifiedDV" class="form-control" id="modifiedDV" placeholder="Modified DV">
+      </div>
+      <div class="input-group">
+        <label for="attackersHits" class="input-group-addon green-label">Attackers Hits</label>
+        <input type="text" name="attackersHits" class="form-control" id="attackersHits" placeholder="Attackers Hits" onchange="calcDamageValue()">
+      </div>
+      <div class="input-group">
+        <label for="finalDV" class="input-group-addon"><span class="label label-warning input-group-addon" id="stun">Stun</span><span class="label label-danger input-group-addon" id="physical">Physical</span> Final DV</label>
+        <input type="text" name="finalDV" class="form-control" id="finalDV" placeholder="Final DV (modified DV + (Num of Rounds - 1)">
+      </div>
+      <div class="input-group">
+        <label for="defenderDicePoolModifier" class="input-group-addon red-label">Defenders Dice Pool<span id="defenderDicePoolModifier" class="badge badge-important">Fill In Form</span></label>
+      </div>
+      <div class="input-group">
+        <label for="defendersHits" class="input-group-addon red-label">Defenders Hits</label>
+        <input type="text" name="defendersHits" class="form-control" id="defendersHits" placeholder="Defenders Hits" onchange="calcDamageValue()">
+      </div>
+      <div class="input-group">
+        <label for="defendersArmor" class="input-group-addon">Defenders Armor</label>
+        <input type="text" name="defendersArmor" class="form-control" id="defendersArmor" placeholder="Defenders Armor" onchange="calcModifiedDefendersArmor()">
+      </div>
+      <div class="input-group">
+        <label for="modifiedDefendersArmor" class="input-group-addon">Adj Defenders Armor</label>
+        <input type="text" name="modifiedDefendersArmor" class="form-control" id="modifiedDefendersArmor" placeholder="Modified Defenders Armor (Armor - AP)">
+      </div>
+      <div class="input-group">
+        <label for="defenderDamageTaken" class="input-group-addon">Defender Damage Taken</label>
+        <input type="text" name="defenderDamageTaken" class="form-control" id="defenderDamageTaken" placeholder="Defender Damage Taken">
+      </div>
+      <!--<button type="submit" class="btn btn-default">Submit</button>-->
+      <input type="hidden" name="attackerDicePoolHidden" id="attackerDicePoolHidden">
+      <input type="hidden" name="defenderDicePoolHidden" id="defenderDicePoolHidden">
+      <input type="hidden" name="fireModeWidthFlag" id="fireModeWidthFlag" value="notset">
+    </form>
+  </div>
+</div>
+<div class="container">
+  <!--<div class="well">
+    <pre>
 
                     Take values in form and calulate final damage value as they change.
                     initialDamageValue = Weapon DV + Ammo DV
@@ -215,12 +259,18 @@ finalModifiedDamageValue = "calculatedDamage";
                     }
                     wide fireModeWidth means -2 to defenders dice pool
                     finalModifiedDamageValue = "calculatedDamage";</pre>
-                </div>
-            </div>
-            <script src="https://code.jquery.com/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-            <script src="../js/shadowrun.js"></script>
-            <script>
-            </script>
-        </body>
-        </html>
+  </div>-->
+</div>
+<script src="https://code.jquery.com/jquery.min.js"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+<script src="../js/shadowrun.js"></script>
+<!-- InstanceEndEditable --></div>
+<!-- Angular JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+<!-- Latest compiled and minified JavaScript --> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+<script src="../js/shadowrun.js"></script>
+</body>
+<!-- InstanceEnd --></html>
