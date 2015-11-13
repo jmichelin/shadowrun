@@ -44,7 +44,7 @@ function calcAttackerDicePool() {
 }
 
 function calcDamageValue() {
-  var attackerDamageValue;
+  var attackerDamageValue = 0;
   var weaponDamageValue = parseInt(document.getElementById("weaponDamageValue").value);
   if (weaponDamageValue) {
     attackerDamageValue = weaponDamageValue;
@@ -279,7 +279,7 @@ function calcDefenderDamageTaken () {
   finalDV = parseInt(document.getElementById("finalDV").value);
   modifiedDefendersArmor = parseInt(document.getElementById("modifiedDefendersArmor").value);
   var damageCalc = (modifiedDefendersArmor - finalDV) * -1;
-  if(damageCalc <= 0){
+  if(_.isNaN(damageCalc) || damageCalc <= 0){
       damageCalc = 0;
   }
   document.getElementById("defenderDamageTaken").value = damageCalc ;
